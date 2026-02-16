@@ -37,9 +37,13 @@ def get_settings() -> Settings:
     Env vars used:
     - POSTGRES_URL, POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_DB, POSTGRES_PORT
     - JWT_SECRET, JWT_ISSUER, JWT_AUDIENCE, JWT_EXP_MINUTES
-    - CORS_ALLOW_ORIGINS (comma-separated, default "*")
+    - ALLOWED_ORIGINS (comma-separated) OR CORS_ALLOW_ORIGINS (comma-separated, default "*")
+
+    Notes:
+    - The project manifest injects ALLOWED_ORIGINS for the preview environment.
+    - We keep CORS_ALLOW_ORIGINS as a backwards-compatible fallback.
     """
-    cors_raw = _get_env("CORS_ALLOW_ORIGINS", "*") or "*"
+    cors_raw = _get_env("ALLOWED_ORIGINS") or _get_env("CORS_ALLOW_ORIGINS", "*") or "*"
     cors = ["*"] if cors_raw.strip() == "*" else [o.strip() for o in cors_raw.split(",") if o.strip()]
 
     jwt_secret = _get_env("JWT_SECRET", "dev-secret-change-me")

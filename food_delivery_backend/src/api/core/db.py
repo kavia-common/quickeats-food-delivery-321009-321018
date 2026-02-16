@@ -19,8 +19,11 @@ def _build_dsn() -> str:
 
     # Fallback if URL not provided (still env-driven).
     # NOTE: Orchestrator should provide POSTGRES_URL; this fallback is best-effort.
+    #
+    # Important: in this project the database container commonly exposes Postgres on 5000
+    # (see database/db_connection.txt), not 5432.
     host = "localhost"
-    port = s.postgres_port or "5432"
+    port = s.postgres_port or "5000"
     user = s.postgres_user or "postgres"
     password = s.postgres_password or ""
     db = s.postgres_db or "postgres"
