@@ -1,0 +1,4 @@
+{
+    "command": "pytest",
+    "working_directory": "/home/kavia/workspace/code-generation/quickeats-food-delivery-321009-321018/food_delivery_backend"
+}
